@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>测试一下啊</title>
+    <!-- bootstrap 样式 -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- 引入核心类 -->
+    <script src="js/jquery-2.1.0.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- 表单验证库 -->
+    <script src="js/jquery.validate.js"></script>
+    <!-- 表单验证库的国际化代码 中文提示-->
+    <script src="js/messages_zh.js"></script>
+    <style>
+        .jumbotron,
+        body {
+            background: linear-gradient(90deg, #d299c2, #fef9d7);
+            
+            margin: 20px;
+            font-family: "microsoft yahei";
+        }
+
+        img {
+            width: 100%;
+            /*height: 462px;*/
+        }
+
+        .navbar {
+            margin-bottom: -10px;
+        }
+
+        #myppt {
+            margin-top: -20px;
+
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding-left: 30px;
+            width: 60%;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#registerForm").validate({
+                rules: {
+                    r_username: {
+                        required: true,
+                        minlength: 5
+                    },
+                    r_password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    check_password: {
+                        required: true,
+                        equalTo: "[name='r_password']"
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    r_username: {
+                        required: "用户名不能为空",
+                        minlength: "用户名称不能少于5位"
+                    },
+                    r_password: {
+                        required: "密码不能为空",
+                        minlength: "密码不能少于6个字符"
+                    },
+                    check_password: {
+                        required: "再次输入密码不能为空",
+                        equalTo: "两次密码输入不一致"
+                    },
+                    email: {
+                        required: "请输入邮箱地址",
+                        email: "请输入有效的邮箱地址"
+                    }
+                }
+            });
+            $("#loginForm").validate({
+                rules: {
+                    l_username: {
+                        required: true
+                    },
+                    l_password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    l_username: {
+                        required: "请输入用户名"
+                    },
+                    l_password: {
+                        required: "请输入密码"
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a data-toggle="modal" data-target="#login" href="">
+                        <span class="glyphicon glyphicon-log-in"></span> 登录 </a>
+                </li>
+                <li>
+                    <a data-toggle="modal" data-target="#register" href="">
+                        <span class="glyphicon glyphicon-user"></span> 注册</a>
+                </li>
+            </ul>
+            <h1>Hello, world!</h1>
+        </div>
+    </div>
+    <!-- 注册register窗口 -->
+    <div class="container">
+        <div id="register" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-title">
+                        <h1 class="text-center">注册</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" action="/web06/userRegister" method="POST" id="registerForm">
+                            <div class="form-group">
+                                <label for="">用户名</label>
+                                <input class="form-control" type="text" name="r_username" placeholder="Username">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">密码</label>
+                                <input class="form-control" type="password" name="r_password" placeholder="Password">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">再次输入密码</label>
+                                <input class="form-control" type="password" name="check_password"
+                                    placeholder="Repeat password ">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">邮箱</label>
+                                <input class="form-control" type="email" name="email" placeholder="Such as: xxx@qq.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">爱好</label><br>
+                                <label class="checkbox-inline">
+                                    <input  type="checkbox" name="hobby" value="吃饭"> 吃饭
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="hobby" value="睡觉"> 睡觉
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" checked="checked" name="hobby" value="打豆豆"> 打豆豆
+                                </label>
+                            </div>
+
+                            <div class="text-right">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                            </div>
+                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#login">已有账号？点我登录</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登录login窗口 -->
+    <div class="container">
+        <div id="login" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-title">
+                        <h1 class="text-center">登录</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" action="/web06/userLogin" method="POST" id="loginForm">
+                            <div class="form-group">
+                                <label for="">用户名</label>
+                                <input class="form-control" name="l_username" type="text" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="">密码</label>
+                                <input class="form-control" name="l_password" type="password" placeholder="Password">
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-primary" type="submit">登录</button>
+                                <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                            </div>
+                            <a href="" data-toggle="modal" data-dismiss="modal" data-target="#register">还没有账号？点我注册</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

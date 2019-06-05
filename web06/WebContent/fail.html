@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Success</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var time = 3;
+            var secondEle = document.getElementById("second");
+            var timer = setInterval(function () {
+                secondEle.innerHTML = time;
+                time--;
+                if (time == 0) {
+                    clearInterval(timer);
+                    location.href = "/web06/index.html";
+                }
+            }, 1000);
+        }
+    </script>
+
+</head>
+
+<body>
+    对不起，未知原因注册失败，<span id="second">4</span>秒钟后跳转，如不跳转点击<a href="/web06/index.html">这里</a>!
+</body>
+
+</html>
