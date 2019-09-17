@@ -21,7 +21,7 @@ public class DelProprietorById extends HttpServlet {
         ProprietorService service = new ProprietorService();
         try {
             service.delProprietorById(p_id);
-
+            response.sendRedirect("/admin.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }

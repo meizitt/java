@@ -21,6 +21,7 @@ public class DelRecordByRid extends HttpServlet {
         RecordService service = new RecordService();
         try {
             service.delRecordByRid(r_id);
+             response.sendRedirect("/admin.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
