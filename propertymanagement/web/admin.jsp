@@ -61,7 +61,7 @@
                             </div>
                             <div id="panel-element-822426" class="panel-collapse collapse">
                                 <div class="panel-body" style="background-color:#d9edf7 ">
-                                    <a style="background-color: #d9edf7" href="/findAllRecode" class="list-group-item">全部记录</a>
+                                    <a style="background-color: #d9edf7" href="/findAllRecode?currentPage=${pageBean.currentPage}" class="list-group-item">全部记录</a>
                                     <a style="background-color: #d9edf7" href="#" class="list-group-item"
                                        data-toggle="modal"
                                        data-target="#addRecordModal">增添记录</a>
@@ -121,7 +121,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="javascript:void(0);" onclick="delProprietor(${proprietor.p_id})">
+                                <a href="javascript:void(0);" onclick="delProprietor('${proprietor.p_id}')">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </a>
                             </td>
@@ -131,43 +131,92 @@
                     </tbody>
                 </table>
             </c:if>
-            <c:if test="${!empty proprietorRecordList}">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>缴费id</th>
-                        <th>业主id</th>
-                        <th>业主姓名</th>
-                        <th>缴费时间</th>
-                        <th>金额</th>
-                        <th>备注</th>
-                        <th>修改记录</th>
-                        <th>删除记录</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${proprietorRecordList}" var="proprietorRecord">
+            <c:if test="${!empty pageBean}">
+                <div>
+                    <table class="table table-hover">
+                        <thead>
                         <tr>
-                            <td>${proprietorRecord.r_id}</td>
-                            <td>${proprietorRecord.p_id}</td>
-                            <td>${proprietorRecord.p_name}</td>
-                            <td>${proprietorRecord.r_time}</td>
-                            <td>${proprietorRecord.r_money}</td>
-                            <td>${proprietorRecord.r_remark}</td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="updateRcord('${proprietorRecord.r_id}')">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="delRecord(${proprietorRecord.r_id})">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </a>
-                            </td>
+                            <th>缴费id</th>
+                            <th>业主id</th>
+                            <th>业主姓名</th>
+                            <th>缴费时间</th>
+                            <th>金额</th>
+                            <th>备注</th>
+                            <th>修改记录</th>
+                            <th>删除记录</th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${pageBean.recordList}" var="recordList">
+                            <tr>
+                                <td>${recordList.r_id}</td>
+                                <td>${recordList.p_id}</td>
+                                <td>${recordList.p_name}</td>
+                                <td>${recordList.r_time}</td>
+                                <td>${recordList.r_money}</td>
+                                <td>${recordList.r_remark}</td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="updateRcord('${recordList.r_id}')">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" onclick="delRecord('${recordList.r_id}','${pageBean.currentPage}')">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <nav aria-label="Page navigation" style="position: absolute;top: 300px;right: 40px">
+                        <ul class="pagination">
+
+                            <c:if test="${pageBean.currentPage==1}">
+
+                                <li class="disabled">
+                                    <a href="javascript:void(0);" aria-label="Previous">
+                                        <span aria-hidden="true">上一页</span></a>
+                                </li>
+                            </c:if>
+                            <c:if test="${pageBean.currentPage!=1}">
+                                <li>
+                                    <a href="/findAllRecode?currentPage=${pageBean.currentPage-1}" aria-label="Previous">
+                                        <span aria-hidden="true">上一页</span></a>
+                                </li>
+                            </c:if>
+
+                            <c:forEach begin="1" end="${pageBean.totalPage}" var="page">
+
+                                <c:if test="${pageBean.currentPage==page}">
+                                    <li class="active"><a href="javascript:void(0);"> ${page} </a></li>
+                                </c:if>
+
+                                <c:if test="${pageBean.currentPage!=page}">
+                                    <li><a href="/findAllRecode?currentPage=${page}"> ${page} </a></li>
+                                </c:if>
+                            </c:forEach>
+
+                            <c:if test="${pageBean.currentPage==pageBean.totalPage}">
+                                <li class="disabled">
+                                    <a href="javascript:void(0);" aria-label="Next">
+                                        <span aria-hidden="true">下一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                            <c:if test="${pageBean.currentPage!=pageBean.totalPage}">
+                                <li>
+                                    <a href="/findAllRecode?currentPage=${pageBean.currentPage+1}" aria-label="Next">
+                                        <span aria-hidden="true">下一页</span>
+                                    </a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </nav>
+                </div>
+
             </c:if>
             <c:if test="${!empty allRecord}">
                 <table class="table table-hover">

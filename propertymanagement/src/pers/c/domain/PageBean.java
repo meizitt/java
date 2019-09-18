@@ -3,22 +3,14 @@ package pers.c.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageBean {
+public class PageBean<T>{
     private int currentPage;
     private int currentCount;
     private int totalCount;
     private int totalPage;
-    private List<Record> recordList = new ArrayList<>();
+    private List<T> recordList = new ArrayList<>();
 
     public PageBean() {}
-
-    public PageBean(int currentPage, int currentCount, int totalCount, int totalPage, List<Record> recordList) {
-        this.currentPage = currentPage;
-        this.currentCount = currentCount;
-        this.totalCount = totalCount;
-        this.totalPage = totalPage;
-        this.recordList = recordList;
-    }
 
     public int getCurrentPage() {
         return currentPage;
@@ -52,11 +44,11 @@ public class PageBean {
         this.totalPage = totalPage;
     }
 
-    public List<Record> getRecordList() {
+    public List<T> getRecordList() {
         return recordList;
     }
 
-    public void setRecordList(List<Record> recordList) {
+    public void setRecordList(List<T> recordList) {
         this.recordList = recordList;
     }
 }

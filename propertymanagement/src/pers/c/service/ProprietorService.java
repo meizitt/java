@@ -31,7 +31,7 @@ public class ProprietorService {
 
 
 
-    public void delProprietorById(String p_id) throws SQLException {
+    public void deleteById(String p_id) throws SQLException {
         RecordDao rDao=new RecordDao();
         rDao.delAllRecord(p_id);
         dao.delProprietorById(p_id);

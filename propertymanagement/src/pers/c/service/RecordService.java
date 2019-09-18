@@ -35,12 +35,14 @@ public class RecordService {
         dao.UpdateRecord(record);
     }
 
-    public List<ProprietorRecord> findAllRecord() throws SQLException {
+    public List<ProprietorRecord> findAllRecord(int index,int currentCount) throws SQLException {
         ProprietorDao pdao = new ProprietorDao();
-        List<Record> recordList = dao.findAllRecord();
+        List<Record> recordList = dao.findAllRecord(index, currentCount);
         List<ProprietorRecord> proprietorRecordList = new ArrayList<>();
         for (Record record : recordList) {
             Proprietor proprietor = pdao.findProprietorById(record.getP_id());
+            if (proprietor == null)
+                return proprietorRecordList;
             ProprietorRecord proprietorRecord = new ProprietorRecord(record, proprietor.getP_name());
             proprietorRecordList.add(proprietorRecord);
         }
@@ -63,15 +65,34 @@ public class RecordService {
         List<Record> recordList = dao.findAllRecordByPid(p_id);
 //        int totalCount= dao.getTotalCount(p_id);
         int totalCount = recordList.size();
-        int totalPage =(int) Math.ceil(1.0 * totalCount / currentCount);
-        int index = (currentPage-1)*currentCount;
+        int totalPage = (int) Math.ceil(1.0 * totalCount / currentCount);
+        int index = (currentPage - 1) * currentCount;
         PageBean pageBean = new PageBean();
         pageBean.setCurrentPage(currentPage);
         pageBean.setCurrentCount(currentCount);
         pageBean.setTotalCount(totalCount);
         pageBean.setTotalPage(totalPage);
-        List<Record> records= dao.findRecordListForPageBean(p_id,index,currentCount);
+        List<Record> records = dao.findRecordListForPageBean(p_id, index, currentCount);
         pageBean.setRecordList(records);
+        return pageBean;
+    }
+
+    public PageBean findPageBean(int currentPage, int currentCount) throws SQLException {
+        List<Record> recordList = dao.findAllRecord();
+        int totalCount = recordList.size();
+        int totalPage = (int) Math.ceil(1.0 * totalCount / currentCount);
+        int index = (currentPage - 1) * currentCount;
+
+        PageBean pageBean = new PageBean();
+
+        pageBean.setCurrentPage(currentPage);
+        pageBean.setCurrentCount(currentCount);
+        pageBean.setTotalCount(totalCount);
+        pageBean.setTotalPage(totalPage);
+        List<ProprietorRecord> proprietorRecordList = findAllRecord(index, currentCount);
+
+        pageBean.setRecordList(proprietorRecordList);
+
         return pageBean;
     }
 }

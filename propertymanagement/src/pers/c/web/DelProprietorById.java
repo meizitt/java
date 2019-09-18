@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "deleteProprietorById" ,urlPatterns = "/deleteProprietorById")
+@WebServlet(name = "delProprietorById" ,urlPatterns = "/deleteProprietorById")
 public class DelProprietorById extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -20,8 +20,8 @@ public class DelProprietorById extends HttpServlet {
         String p_id = request.getParameter("p_id");
         ProprietorService service = new ProprietorService();
         try {
-            service.delProprietorById(p_id);
-            response.sendRedirect("/admin.jsp");
+            service.deleteById(p_id);
+            response.sendRedirect("/findAllProprietor");
         } catch (SQLException e) {
             e.printStackTrace();
         }

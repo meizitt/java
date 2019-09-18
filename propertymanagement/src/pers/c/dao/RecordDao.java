@@ -72,6 +72,13 @@ public class RecordDao {
     public void delAllRecord(String p_id) throws SQLException {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "delete from record where p_id=?";
-        runner.update(sql,p_id);
+        int update = runner.update(sql, p_id);
+    }
+
+    public List<Record> findAllRecord(int index, int currentCount) throws SQLException {
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        String sql = "select * from record limit ?,?";
+        List<Record> records = runner.query(sql, new BeanListHandler<Record>(Record.class), index, currentCount);
+        return records;
     }
 }

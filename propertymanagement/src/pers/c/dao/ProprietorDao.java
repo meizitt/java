@@ -35,7 +35,9 @@ public class ProprietorDao {
     public void delProprietorById(String p_id) throws SQLException {
         QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
         String sql = "delete from pinfo where p_id=?";
-        runner.update(sql, p_id);
+        int update = runner.update(sql, p_id);
+        System.out.println("del p " + update);
+
     }
 
     public void updatePropritedInfo(Proprietor proprietor) throws SQLException {

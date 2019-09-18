@@ -1,5 +1,6 @@
 package pers.c.web;
 
+import pers.c.domain.PageBean;
 import pers.c.domain.Proprietor;
 import pers.c.domain.ProprietorRecord;
 import pers.c.domain.Record;
@@ -23,11 +24,23 @@ public class FindAllRecode extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RecordService service = new RecordService();
-        List<ProprietorRecord> proprietorRecordList;
+//        List<ProprietorRecord> proprietorRecordList;
+        String currentPageStr = request.getParameter("currentPage");
+        if (currentPageStr.isEmpty())
+            currentPageStr = "1";
+        int currentPage = Integer.parseInt(currentPageStr);
+//        int currentPage=2;
+        int currentCount = 6;
+
+        PageBean pageBean = null;
+
+
         try {
-            proprietorRecordList = service.findAllRecord();
-            request.setAttribute("proprietorRecordList",proprietorRecordList);
-            request.getRequestDispatcher("admin.jsp").forward(request,response);
+            pageBean = service.findPageBean(currentPage,currentCount);
+            request.setAttribute("pageBean", pageBean);
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
